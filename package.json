@@ -1,0 +1,16 @@
+{
+  "name": "battlepicture",
+  "version": "0.1.1",
+  "main": "main.js",
+  "repository": "git@github.com:zsirfs/battlePicture.git",
+  "author": "zsirfs",
+  "license": "Apache",
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^13.0.1",
+    "eslint": "^7.27.0"
+  },
+  "scripts": {
+    "start": "electron ."
+  }
+}
