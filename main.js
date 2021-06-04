@@ -13,7 +13,6 @@ app.on('will-quit', (e) => {
 });
 
 app.on('quit', (e) => {
-  console.log('quit ==>>', e);
   e.preventDefault();
 });
 
@@ -29,35 +28,36 @@ app.setName('DouTu');
 if (process.env.NODE_ENV === 'development') {
   const devRenderBuilder = require('./scripts/start');
   devRenderBuilder().then((url) => {
-    app.whenReady().then(() => {
+    ready(url);
+  });
+} else {
+  ready();
+}
+
+function ready(url) {
+  app
+    .whenReady()
+    .then(() => {
+      // if (process.platform === 'darwin') {
+      //   app.dock.setMenu(dockMenu);
+      // }
       getWindowInstance(url);
 
       app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) getWindowInstance(url);
       });
-    });
-  });
-} else {
-  app.whenReady().then(() => {
-    // if (process.platform === 'darwin') {
-    //   app.dock.setMenu(dockMenu);
-    // }
-    getWindowInstance();
-
-    app.on('activate', () => {
-      if (BrowserWindow.getAllWindows().length === 0) getWindowInstance();
-    });
-  });
+    })
+    .then(trayReady);
 }
 
 let tray = null;
-app.on('ready', () => {
+function trayReady() {
   const img = nativeImage.createFromPath(__dirname + '/assets/tray.png');
   tray = new Tray(img);
   tray.setToolTip('click to show win ~');
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: 'QUIT',
+      label: '退出',
       type: 'normal',
       click() {
         app.exit();
@@ -72,8 +72,9 @@ app.on('ready', () => {
     tray.setContextMenu(null);
     const x = pos.x - 300;
     const y = pos.y - pos.height;
-
     const win = getWindowInstance();
+
+    if (win.isVisible() && win.isClosable()) return;
 
     if (!win.isVisible()) {
       win.setPosition(x, y);
@@ -82,4 +83,4 @@ app.on('ready', () => {
       win.hide();
     }
   });
-});
+}
