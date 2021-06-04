@@ -1,12 +1,15 @@
 import 'antd/dist/antd.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
+import { message } from 'antd';
 import App from './App';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux';
 import { store } from './store';
+
+message.config({ top: 0 });
 
 ReactDOM.render(
   // <React.StrictMode>

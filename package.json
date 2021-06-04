@@ -87,8 +87,8 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "scripts": {
-    "start": "electron .",
-    "start:debug": "electron . --inspect",
+    "start": "NODE_ENV=development electron .",
+    "start:debug": "NODE_ENV=development electron . --inspect",
     "build:renderer": "node scripts/build.js",
     "build:main": "electron-builder build --mac --publish never",
     "build": "yarn build:renderer && yarn build:main"
