@@ -8,5 +8,36 @@ body {
 }
 
 .app {
-  padding: 40px;
+  padding: 20px;
+  user-select: none;
+}
+
+.card-pic {
+  width: calc((100vw - 20px * 2) / 5);
+  height: calc((100vw - 20px * 2) / 5);
+  padding: 10px;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+.pic-wrapper {
+  height: calc((100vh - 110px));
+  overflow: scroll;
+}
+
+.pic-search {
+  border-radius: 20px;
+}
+
+.tips {
+  width: 100%;
+  color: #333;
+  font-size: 12px;
+  background-color: #efefef;
+  font-weight: 500;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin-top: 8px;
 }

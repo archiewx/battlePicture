@@ -1,0 +1,8 @@
+{
+  "directories": {
+    "buildResources": "main-build"
+  },
+  "dmg": {
+    "title": "斗图助手"
+  }
+}

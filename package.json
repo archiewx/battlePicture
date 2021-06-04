@@ -5,10 +5,14 @@
   "repository": "git@github.com:zsirfs/battlePicture.git",
   "author": "zsirfs",
   "license": "Apache",
+  "homepage": ".",
   "dependencies": {
+    "@ant-design/icons": "^4.6.2",
     "@nnwa/redux-saga-actions": "^0.3.12",
     "antd": "^4.16.1",
+    "asar": "^3.0.3",
     "axios": "^0.21.1",
+    "axios-jsonp": "^1.0.4",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "redux": "^4.1.0",
@@ -35,6 +39,7 @@
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
     "electron": "^13.0.1",
+    "electron-builder": "^22.10.5",
     "eslint": "^7.27.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.2.0",
@@ -69,7 +74,7 @@
     "react-refresh": "^0.8.3",
     "resolve": "1.18.1",
     "resolve-url-loader": "^3.1.2",
-    "sass-loader": "^10.0.5",
+    "sass-loader": "^12.0.0",
     "semver": "7.3.2",
     "style-loader": "1.3.0",
     "terser-webpack-plugin": "4.2.3",
@@ -82,7 +87,11 @@
     "workbox-webpack-plugin": "5.1.4"
   },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "start:debug": "electron . --inspect",
+    "build:renderer": "node scripts/build.js",
+    "build:main": "electron-builder build --mac --publish never",
+    "build": "yarn build:renderer && yarn build:main"
   },
   "browserslist": {
     "production": [
