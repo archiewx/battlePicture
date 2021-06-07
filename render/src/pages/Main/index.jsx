@@ -1,5 +1,5 @@
-import { useReduxDispatch } from '@nnwa/redux-saga-actions';
 import { UndoOutlined } from '@ant-design/icons';
+import { useReduxDispatch } from '@nnwa/redux-saga-actions';
 import {
   Button,
   Card,
@@ -14,6 +14,7 @@ import {
 import { useEffect, useState } from 'react';
 import { globalActions } from '../../models/global';
 import { useReduxState } from '../../store';
+import UserDropdown from './UserDropdown';
 
 function MainPage() {
   const { sgDoutu, sgLoading } = useReduxState((state) => state.global);
@@ -40,7 +41,7 @@ function MainPage() {
 
   const onCopyPic = (item) => {
     window.$api
-      .copyRemoteIMG(item)
+      .copyRemoteIMG(item.picUrl)
       .then(() => {
         message.success('已复制粘贴板，CTRL/CMD+C直接使用~');
       })
@@ -61,7 +62,10 @@ function MainPage() {
           ) : null
         }
       >
-        <Row style={{ height: 50 }} align="middle" justify="space-between">
+        <Row style={{ height: 50 }} align="middle" justify="start" gutter={10}>
+          <Col>
+            <UserDropdown />
+          </Col>
           <Col span={14}>
             <Input
               className="pic-search no-drag"
@@ -70,7 +74,9 @@ function MainPage() {
                 if (e.key === 'Enter') onSearch();
               }}
               onChange={(e) => {
-                dispatch(globalActions.updateQuery({ query: e.target.value + ' 表情' }));
+                dispatch(
+                  globalActions.updateQuery({ query: e.target.value + ' 表情' })
+                );
               }}
               suffix={
                 <Space>

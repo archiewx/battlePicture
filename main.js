@@ -1,5 +1,7 @@
 require('./main-process');
 const { app, BrowserWindow, Menu, Tray, nativeImage } = require('electron');
+const fse = require('fs-extra');
+const os = require('os');
 const createGetWindowInstance = require('./main-process/win');
 
 const getWindowInstance = createGetWindowInstance();
@@ -38,6 +40,9 @@ function ready(url) {
   app
     .whenReady()
     .then(() => {
+      if (!fse.existsSync(os.homedir() + '/.dou')) {
+        fse.mkdirSync(os.homedir() + '/.dou');
+      }
       // if (process.platform === 'darwin') {
       //   app.dock.setMenu(dockMenu);
       // }

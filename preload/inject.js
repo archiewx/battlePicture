@@ -8,5 +8,6 @@ const {
 contextBridge.exposeInMainWorld('$api', {
   nativeImage,
   clipboard,
-  copyRemoteIMG: (item) => ipcRenderer.invoke('copyRemoteIMG', item),
+  copyRemoteIMG: (url) => ipcRenderer.invoke('copyRemoteIMG', url),
+  getAppIMAGEList: () => ipcRenderer.invoke('getAppIMAGEList')
 });

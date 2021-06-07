@@ -9,7 +9,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { store } from './store';
 
-message.config({ top: 0, duration: 1500 });
+message.config({ top: 0, duration: 1.5, maxCount: 1 });
 
 ReactDOM.render(
   // <React.StrictMode>
