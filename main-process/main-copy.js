@@ -1,10 +1,11 @@
-const { ipcMain } = require('electron');
+const { ipcMain, Notification } = require('electron');
 const fse = require('fs-extra');
 const os = require('os');
+const { notice } = require('./notification');
 
 ipcMain.handle('copyRemoteIMG', copyRemoteIMG);
 
-function copyRemoteIMG(e, url) {
+function copyRemoteIMG(e, url, isNotice = true) {
   return new Promise((resolve, reject) => {
     const { net, clipboard, nativeImage } = require('electron');
     const req = net.request(url);
@@ -26,6 +27,9 @@ function copyRemoteIMG(e, url) {
           fse.appendFile(cacheFile, `${url}\n`);
         }
         clipboard.writeImage(image);
+        if (Notification.isSupported() && isNotice) {
+          notice(image, '复制成功~');
+        }
         resolve();
       });
 

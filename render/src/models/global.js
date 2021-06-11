@@ -18,7 +18,7 @@ const global = {
       total: 0,
     },
 
-    query: { start: 0, w: '哈哈哈', size: 30 },
+    query: { start: 0, w: '哈哈', size: 30 },
     list: [],
   },
 

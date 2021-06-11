@@ -4,7 +4,17 @@ import {
   UndoOutlined,
 } from '@ant-design/icons';
 import { useReduxDispatch } from '@nnwa/redux-saga-actions';
-import { Button, Card, Col, Input, message, Row, Space, Spin } from 'antd';
+import {
+  Button,
+  Card,
+  Col,
+  Input,
+  message,
+  Row,
+  Space,
+  Spin,
+  Modal,
+} from 'antd';
 import { useEffect, useState } from 'react';
 import { globalActions } from '../../models/global';
 import { useReduxState } from '../../store';
@@ -34,14 +44,9 @@ function MainPage() {
   };
 
   const onCopyPic = (item) => {
-    window.$api
-      .copyRemoteIMG(item.url)
-      .then(() => {
-        message.success('已复制粘贴板，CTRL/CMD+C直接使用~');
-      })
-      .catch((err) => {
-        message.error(err.message);
-      });
+    window.$api.copyRemoteIMG(item.url, true).catch((err) => {
+      message.error(err.message);
+    });
   };
 
   return (
@@ -152,6 +157,25 @@ function MainPage() {
           <div className="tips">
             &gt; 反馈可发邮件到
             <a href="mailto:zhenglfsir@gmail.com">zhenglfsir@gmail.com</a>
+            <a
+              style={{ float: 'right' }}
+              onClick={() => {
+                Modal.warning({
+                  title: '暂时无法解决的问题',
+                  content: (
+                    <div>
+                      <p>
+                        1. Gif 文件无法支持(Electron NativeImage 无法复制GIF,
+                        待解决中)
+                      </p>
+                    </div>
+                  ),
+                  onOk: () => message.success('😚😚😚😚 感谢支持~'),
+                });
+              }}
+            >
+              局限
+            </a>
           </div>
         </Row>
       </Spin>
