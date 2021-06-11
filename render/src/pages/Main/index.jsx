@@ -10,10 +10,10 @@ import {
   Col,
   Input,
   message,
+  Modal,
   Row,
   Space,
   Spin,
-  Modal,
 } from 'antd';
 import { useEffect, useState } from 'react';
 import { globalActions } from '../../models/global';
@@ -157,8 +157,9 @@ function MainPage() {
           <div className="tips">
             &gt; 反馈可发邮件到
             <a href="mailto:zhenglfsir@gmail.com">zhenglfsir@gmail.com</a>
-            <a
+            <Button
               style={{ float: 'right' }}
+              type="link"
               onClick={() => {
                 Modal.warning({
                   title: '暂时无法解决的问题',
@@ -175,7 +176,7 @@ function MainPage() {
               }}
             >
               局限
-            </a>
+            </Button>
           </div>
         </Row>
       </Spin>
