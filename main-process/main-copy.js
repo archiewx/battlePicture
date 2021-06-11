@@ -1,5 +1,5 @@
 const { ipcMain, Notification } = require('electron');
-const fse = require('fs-extra');
+const fs = require('fs');
 const os = require('os');
 const { notice } = require('./notification');
 
@@ -19,12 +19,12 @@ function copyRemoteIMG(e, url, isNotice = true) {
         const image = nativeImage.createFromBuffer(buf);
 
         const cacheFile = os.homedir() + '/.dou/images';
-        if (!fse.existsSync(cacheFile)) {
-          fse.writeFileSync(cacheFile, ``);
+        if (!fs.existsSync(cacheFile)) {
+          fs.writeFileSync(cacheFile, ``);
         }
-        const rows = fse.readFileSync(cacheFile).toString();
+        const rows = fs.readFileSync(cacheFile).toString();
         if (!rows.includes(cacheFile)) {
-          fse.appendFile(cacheFile, `${url}\n`);
+          fs.appendFileSync(cacheFile, `${url}\n`);
         }
         clipboard.writeImage(image);
         if (Notification.isSupported() && isNotice) {

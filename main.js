@@ -1,10 +1,6 @@
-require('update-electron-app')({
-  repo: 'zsirfs/battlePicture',
-  updateInterval: '1 hour',
-});
 require('./main-process');
 const { app, BrowserWindow, Menu, Tray, nativeImage } = require('electron');
-const fse = require('fs-extra');
+const fs = require('fs');
 const os = require('os');
 const createGetWindowInstance = require('./main-process/win');
 
@@ -44,8 +40,8 @@ function ready(url) {
   app
     .whenReady()
     .then(() => {
-      if (!fse.existsSync(os.homedir() + '/.dou')) {
-        fse.mkdirSync(os.homedir() + '/.dou');
+      if (!fs.existsSync(os.homedir() + '/.dou')) {
+        fs.mkdirSync(os.homedir() + '/.dou');
       }
       // if (process.platform === 'darwin') {
       //   app.dock.setMenu(dockMenu);
