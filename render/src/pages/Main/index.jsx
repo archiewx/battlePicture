@@ -1,7 +1,7 @@
 import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
-  UndoOutlined,
+  UndoOutlined
 } from '@ant-design/icons';
 import { useReduxDispatch } from '@nnwa/redux-saga-actions';
 import {
@@ -9,16 +9,13 @@ import {
   Card,
   Col,
   Input,
-  message,
-  Modal,
-  Row,
+  message, Row,
   Space,
-  Spin,
+  Spin
 } from 'antd';
 import { useEffect, useState } from 'react';
 import { globalActions } from '../../models/global';
 import { useReduxState } from '../../store';
-import UserDropdown from './UserDropdown';
 
 function MainPage() {
   const { loading, list, query } = useReduxState((state) => state.global);
@@ -62,11 +59,9 @@ function MainPage() {
         }
       >
         <Row style={{ height: 50 }} align="middle" justify="start" gutter={10}>
-          <Col>
-            <UserDropdown />
-          </Col>
           <Col span={14}>
             <Input
+              allowClear
               className="pic-search no-drag"
               placeholder="哈哈哈"
               onKeyPress={(e) => {
@@ -153,8 +148,8 @@ function MainPage() {
               />
             ))}
         </Row>
-        <Row style={{ height: 20 }}>
-          <div className="tips">
+        {/* <Row style={{ height: 20 }}> */}
+        {/* <div className="tips">
             &gt; 反馈可发邮件到
             <a href="mailto:zhenglfsir@gmail.com">zhenglfsir@gmail.com</a>
             <Button
@@ -177,8 +172,8 @@ function MainPage() {
             >
               局限
             </Button>
-          </div>
-        </Row>
+          </div> */}
+        {/* </Row> */}
       </Spin>
     </div>
   );

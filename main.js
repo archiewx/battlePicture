@@ -1,22 +1,10 @@
 require('./main-process');
-const { app, BrowserWindow, Menu, Tray, nativeImage } = require('electron');
+const { app, Menu, Tray, nativeImage, BrowserWindow } = require('electron');
 const fs = require('fs');
 const os = require('os');
 const createGetWindowInstance = require('./main-process/win');
 
 const getWindowInstance = createGetWindowInstance();
-
-app.on('window-all-closed', (e) => {
-  e.preventDefault();
-});
-
-app.on('will-quit', (e) => {
-  e.preventDefault();
-});
-
-app.on('quit', (e) => {
-  e.preventDefault();
-});
 
 const menu = Menu.buildFromTemplate([
   {
@@ -43,13 +31,12 @@ function ready(url) {
       if (!fs.existsSync(os.homedir() + '/.dou')) {
         fs.mkdirSync(os.homedir() + '/.dou');
       }
-      // if (process.platform === 'darwin') {
-      //   app.dock.setMenu(dockMenu);
-      // }
       getWindowInstance(url);
 
       app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) getWindowInstance(url);
+        if (BrowserWindow.getAllWindows().length === 0) {
+          getWindowInstance(url);
+        }
       });
     })
     .then(trayReady);
@@ -77,8 +64,8 @@ function trayReady() {
     tray.setContextMenu(null);
     const x = pos.x - 300;
     const y = pos.y - pos.height;
-    const win = getWindowInstance();
 
+    const win = getWindowInstance();
     if (win.isVisible() && win.isClosable()) return;
 
     if (!win.isVisible()) {

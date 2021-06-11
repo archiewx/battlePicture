@@ -8,7 +8,10 @@ body {
 }
 
 .app {
-  padding: 20px;
+  width: 100vw;
+  height: 100vh;
+  padding: 20px 20px 20px 0;
+  box-sizing: border-box;
   user-select: none;
 }
 
@@ -23,7 +26,7 @@ body {
 }
 
 .pic-wrapper {
-  height: calc((100vh - 110px));
+  height: calc((100vh - 80px));
   overflow: scroll;
 }
 
@@ -31,13 +34,19 @@ body {
   border-radius: 20px;
 }
 
-.tips {
+.layout {
   width: 100%;
-  color: #333;
-  font-size: 12px;
-  background-color: #efefef;
-  font-weight: 500;
-  padding: 2px 4px;
-  border-radius: 4px;
-  margin-top: 8px;
+  height: 100%;
+  background-color: #fff;
+}
+
+.layout-aside {
+  background-color: #fff;
+}
+
+.layout-body {
+  width: calc(100vw - 160px);
+  margin-left: 20px;
+  height: 100%;
+  overflow: scroll;
 }

@@ -26,7 +26,7 @@ const {
   prepareProxy,
   prepareUrls,
 } = require('react-dev-utils/WebpackDevServerUtils');
-const openBrowser = require('react-dev-utils/openBrowser');
+// const openBrowser = require('react-dev-utils/openBrowser');
 const semver = require('semver');
 const paths = require('../render/config/paths');
 const configFactory = require('../render/config/webpack.config');
@@ -37,6 +37,12 @@ const react = require(require.resolve('react', { paths: [paths.appPath] }));
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
+
+const useChangelog = fs.existsSync(paths.changelogPath);
+if (useChangelog) {
+  const changelog = fs.readFileSync(paths.changelogPath);
+  process.env.REACT_APP_CHANGELOG = changelog;
+}
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -142,7 +148,7 @@ module.exports = function devRenderBuilder() {
 
           console.log(chalk.cyan('Starting the development server...\n'));
           // openBrowser(urls.localUrlForBrowser);
-          resolve(urls.localUrlForBrowser)
+          resolve(urls.localUrlForBrowser);
         });
 
         ['SIGINT', 'SIGTERM'].forEach(function (sig) {
@@ -164,7 +170,7 @@ module.exports = function devRenderBuilder() {
         if (err && err.message) {
           console.log(err.message);
         }
-        reject(err)
+        reject(err);
         process.exit(1);
       });
   });

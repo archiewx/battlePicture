@@ -1,6 +1,6 @@
-import { Card, message, Row } from 'antd';
+import { ClearOutlined } from '@ant-design/icons';
+import { Card, message, Row, Button } from 'antd';
 import { useEffect, useState } from 'react';
-import BackButton from '../../components/BackButton';
 
 function RecentlyPage() {
   const [recentlyList, setRecentlyList] = useState([]);
@@ -25,17 +25,19 @@ function RecentlyPage() {
 
   return (
     <div>
-      <BackButton></BackButton>
       <Row className="pic-wrapper">
-        {recentlyList.map((url) => (
+        {recentlyList.map((url, idx) => (
           <Card
             onDoubleClick={() => onCopyPic(url)}
             className="card-pic"
-            key={url}
+            key={url + idx}
             hoverable
             cover={<img alt="example" src={url} />}
           />
         ))}
+      </Row>
+      <Row style={{ marginTop: 10 }}>
+        <Button icon={<ClearOutlined />} shape="round">清空</Button>
       </Row>
     </div>
   );

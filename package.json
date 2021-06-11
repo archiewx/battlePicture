@@ -13,6 +13,7 @@
     "asar": "^3.0.3",
     "axios": "^0.21.1",
     "axios-jsonp": "^1.0.4",
+    "react-markdown": "^6.0.2",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "redux": "^4.1.0",
@@ -35,6 +36,7 @@
     "bfj": "^7.0.2",
     "camelcase": "^6.1.0",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "conventional-changelog-cli": "^2.1.1",
     "css-loader": "4.3.0",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
@@ -91,7 +93,7 @@
     "start:debug": "NODE_ENV=development electron . --inspect",
     "build:renderer": "node scripts/build.js",
     "build:main": "electron-builder build --mac --publish never",
-    "build": "yarn build:renderer && yarn build:main"
+    "build": "npm version && conventional-changelog -p angular -i CHANGELOG.md -s && yarn build:renderer && yarn build:main"
   },
   "browserslist": {
     "production": [

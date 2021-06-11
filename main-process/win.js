@@ -11,7 +11,7 @@ const createGetWindowInstance = () => {
     );
 
     win = new BrowserWindow({
-      width: 600,
+      width: 700,
       height: 420,
       resizable: false,
       maximizable: false,
@@ -19,7 +19,6 @@ const createGetWindowInstance = () => {
       fullscreenable: false,
       title: '斗图辅助',
       titleBarStyle: 'hidden',
-      alwaysOnTop: true,
       icon: img,
       opacity: 0.99,
       webPreferences: {
@@ -38,6 +37,7 @@ const createGetWindowInstance = () => {
     win.on('close', (e) => {
       isClose = true;
       e.preventDefault();
+      win.setAlwaysOnTop(true);
       win.hide();
       win.setClosable(false);
       app.dock.hide();

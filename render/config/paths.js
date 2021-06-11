@@ -67,6 +67,7 @@ module.exports = {
   proxySetup: resolveApp('render/src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   swSrc: resolveModule(resolveApp, 'render/src/service-worker'),
+  changelogPath: resolveApp('CHANGELOG.md'),
   publicUrlOrPath,
 };
 
