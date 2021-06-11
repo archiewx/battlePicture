@@ -5,16 +5,39 @@ const global = {
   namespace: 'global',
 
   state: {
-    sgLoading: false,
+    loading: false,
     sgDoutu: {
-      query: { query: '哈哈 表情', start: 0, reqFrom: 'wap_result', xml_len: 48 },
+      query: {
+        query: '哈哈 表情',
+        start: 0,
+        reqFrom: 'wap_result',
+        xml_len: 48,
+      },
       list: [],
       more: 0,
       total: 0,
     },
+
+    query: { start: 0, w: '哈哈哈', size: 30 },
+    list: [],
   },
 
   effects: {
+    *fetchPicList() {
+      const { query } = yield io.select((state) => state.global);
+      const ret = yield io.call(window.$api.fetchPicList, query);
+
+      yield io.put(
+        globalActions.setState({
+          list: ret.map((item) => ({
+            ...item,
+            url: `https://image.dbbqb.com/${item.path}`,
+          })),
+        })
+      );
+      return true;
+    },
+
     *fetchSogouTuList() {
       const { sgDoutu } = yield io.select((state) => state.global);
       const ret = yield requestSGDoutuList(sgDoutu.query);

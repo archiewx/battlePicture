@@ -9,5 +9,6 @@ contextBridge.exposeInMainWorld('$api', {
   nativeImage,
   clipboard,
   copyRemoteIMG: (url) => ipcRenderer.invoke('copyRemoteIMG', url),
-  getAppIMAGEList: () => ipcRenderer.invoke('getAppIMAGEList')
+  getAppIMAGEList: () => ipcRenderer.invoke('getAppIMAGEList'),
+  fetchPicList: (query) => ipcRenderer.invoke('fetchPicList', query),
 });

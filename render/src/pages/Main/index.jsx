@@ -1,31 +1,25 @@
-import { UndoOutlined } from '@ant-design/icons';
-import { useReduxDispatch } from '@nnwa/redux-saga-actions';
 import {
-  Button,
-  Card,
-  Col,
-  Input,
-  message,
-  Pagination,
-  Row,
-  Space,
-  Spin,
-} from 'antd';
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  UndoOutlined,
+} from '@ant-design/icons';
+import { useReduxDispatch } from '@nnwa/redux-saga-actions';
+import { Button, Card, Col, Input, message, Row, Space, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import { globalActions } from '../../models/global';
 import { useReduxState } from '../../store';
 import UserDropdown from './UserDropdown';
 
 function MainPage() {
-  const { sgDoutu, sgLoading } = useReduxState((state) => state.global);
+  const { loading, list, query } = useReduxState((state) => state.global);
   const dispatch = useReduxDispatch();
 
   const [isRetry, setRetry] = useState(false);
   const refreshTuList = async () => {
-    dispatch(globalActions.setState({ sgLoading: true }));
-    const success = await dispatch(globalActions.fetchSogouTuList());
+    dispatch(globalActions.setState({ loading: true }));
+    const success = await dispatch(globalActions.fetchPicList());
     if (success) {
-      dispatch(globalActions.setState({ sgLoading: false }));
+      dispatch(globalActions.setState({ loading: false }));
       return;
     }
     message.warn('获取表情失败，点击重试');
@@ -41,7 +35,7 @@ function MainPage() {
 
   const onCopyPic = (item) => {
     window.$api
-      .copyRemoteIMG(item.picUrl)
+      .copyRemoteIMG(item.url)
       .then(() => {
         message.success('已复制粘贴板，CTRL/CMD+C直接使用~');
       })
@@ -53,7 +47,7 @@ function MainPage() {
   return (
     <div>
       <Spin
-        spinning={sgLoading}
+        spinning={loading}
         tip={
           isRetry ? (
             <Button type="primary" size="small" onClick={refreshTuList}>
@@ -75,7 +69,9 @@ function MainPage() {
               }}
               onChange={(e) => {
                 dispatch(
-                  globalActions.updateQuery({ query: e.target.value + ' 表情' })
+                  globalActions.setState({
+                    query: { ...query, w: e.target.value },
+                  })
                 );
               }}
               suffix={
@@ -84,7 +80,7 @@ function MainPage() {
                     type="primary"
                     size="small"
                     onClick={onSearch}
-                    loading={sgLoading}
+                    loading={loading}
                     className="pic-search-btn"
                   >
                     搜索
@@ -93,7 +89,7 @@ function MainPage() {
                     size="small"
                     shape="circle"
                     type="primary"
-                    loading={sgLoading}
+                    loading={loading}
                     onClick={refreshTuList}
                     icon={<UndoOutlined />}
                   ></Button>
@@ -102,29 +98,53 @@ function MainPage() {
             />
           </Col>
           <Col>
-            <Pagination
-              className="no-drag"
-              simple
-              current={sgDoutu.query.start / 48 + 1}
-              total={sgDoutu.total}
-              pageSize={48}
-              onChange={(page) => {
-                dispatch(globalActions.setPage({ page }));
-                refreshTuList();
-              }}
-            />
+            <Space>
+              <Button
+                icon={<ArrowLeftOutlined />}
+                disabled={query.start <= 0}
+                loading={loading}
+                onClick={() => {
+                  dispatch(
+                    globalActions.setState({
+                      query: {
+                        ...query,
+                        start: query.start - query.size,
+                      },
+                    })
+                  );
+                  refreshTuList();
+                }}
+                shape="circle"
+              />
+              <Button
+                icon={<ArrowRightOutlined />}
+                loading={loading}
+                onClick={() => {
+                  dispatch(
+                    globalActions.setState({
+                      query: {
+                        ...query,
+                        start: query.start + query.size,
+                      },
+                    })
+                  );
+                  refreshTuList();
+                }}
+                shape="circle"
+              />
+            </Space>
           </Col>
         </Row>
         <Row className="pic-wrapper">
-          {sgDoutu.list
+          {list
             .filter((item) => item.type !== '.gif')
             .map((item) => (
               <Card
                 onDoubleClick={() => onCopyPic(item)}
                 className="card-pic"
-                key={item.docId}
+                key={item.id}
                 hoverable
-                cover={<img alt="example" src={item.thumbUrl} />}
+                cover={<img alt="example" src={item.url} />}
               />
             ))}
         </Row>

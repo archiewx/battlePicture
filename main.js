@@ -1,7 +1,7 @@
 require('update-electron-app')({
   repo: 'zsirfs/battlePicture',
   updateInterval: '1 hour',
-})
+});
 require('./main-process');
 const { app, BrowserWindow, Menu, Tray, nativeImage } = require('electron');
 const fse = require('fs-extra');
